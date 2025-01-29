@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <form action="" id="form">
+        <input type="text" id="name" placeholder="Your name">
+        <br>
+        <input type="text" id="employeeClass" placeholder="Your class">
+        <br>
+        <input type="text" id="age" placeholder="Your age">
+        <br>
+        <input type="text" id="salary" placeholder="Your salary">
+        <br>
+        <button id="submit">הוספת עובד</button>
+    </form>
+
+    <script>
+        const submitButton = document.getElementById("submit")
+        const form = document.getElementById("form")
+        submitButton.addEventListener("click", async (event) => {
+
+            const name = form[0].value
+            const employeeClass = form[1].value
+            const age = form[2].value
+            const salary = form[3].value
+            event.preventDefault();
+            const checkMail = await axios.post("http://localhost:3000/signup", { name: name, class: employeeClass, age: age, salary: salary })
+            console.log(checkMail.data)
+
+        }
+        )
+    </script>
+    <br>
+    <br>
+    <input type="text" id="ageInput"> מחק את כל העובדים שמעל הגיל:
+    <br>
+    <button id="deleteUsers">מחק</button>
+
+    <script>
+        const deleteUsers = document.getElementById("deleteUsers")
+        deleteUsers.addEventListener("click", async () => {
+            const age = document.getElementById("ageInput").value
+            event.preventDefault();
+
+            const usersToDelete = await axios.post("http://localhost:3000/delete-users", { age: age })
+            console.log(usersToDelete.data)
+
+        })
+
+    </script>
+
+    <br>
+    <br>
+    <input type="text" id="oldClass">שם מחלקה ישן
+    <br>
+    <input type="text" id="newClass">שם מחלקה חדש
+    <br>
+    <button id="changeClass">החלף</button>
+    <script>
+        const changeClass = document.getElementById("changeClass")
+        changeClass.addEventListener("click", async () => {
+            const oldClass = document.getElementById("oldClass").value
+            const newClass = document.getElementById("newClass").value
+
+            const usersToDelete = await axios.put("http://localhost:3000/update-class", { class: oldClass, newClass})
+            console.log(usersToDelete.data)
+
+
+        })
+
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</body>
+
+</html>
